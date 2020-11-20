@@ -7,9 +7,6 @@ const {
     removeFormatting
 } = require("./utils");
 const { getPlayer, updatePlayer } = require("./database");
-const { updateGraph } = require("./tps");
-const { getFlags } = require("./autoVotekick");
-const { getData } = require("./verification");
 const { commandWhitelist, commandBlacklist } = require("../config.json");
 const Movements = require("mineflayer-pathfinder").Movements;
 const { GoalNear, GoalFollow } = require("mineflayer-pathfinder").goals;
@@ -85,7 +82,7 @@ const commandHandler = (author, text, command, args, allChat) => {
             return reply(author, `I cannot find ${target}.`);
         const player = players[0];
         const item = player.heldItem;
-        let name = item?.nbt?.value?.display?.value?.Name?.value;
+        let name = item?.nbt?.[value]?.display?.value?.Name?.value;
 
         if (!item)
             return reply(author, `${player.username} shows themselves their fist!`);
@@ -139,12 +136,15 @@ const commandHandler = (author, text, command, args, allChat) => {
 
     if (command === "firstmessage") {
         const target = args[0] ? args[0] : author;
-        getPlayer({ ign: author }).then(verified => {
+        getPlayer({ign: author}).then(verified => {
             if (!verified)
                 return reply(author, "You must be verified to use this command!");
 
-            bot.db.collection("chat").findOne({ author: target }, { sort: { timestamp: 1 } })
+            bot.db.collection("chat").findOne({author: target}, {sort: {timestamp: 1}})
                 .then(message => {
+                    if (!message)
+                        return reply(author, "I couldn't find that person in by database!");
+
                     if (message.length > 85)
                         return reply(author, "Sadly the first message was too long to be sent here.");
                     reply(author, "First message: " + message.message);
@@ -158,8 +158,11 @@ const commandHandler = (author, text, command, args, allChat) => {
             if (!verified)
                 return reply(author, "You must be verified to use this command!");
 
-            bot.db.collection("chat").findOne({author: target}, {sort: {timestamp: -1}})
+            bot.db.collection("chat").findOne({ author: target }, {sort: {timestamp: -1}})
                 .then(message => {
+                    if (!message)
+                        return reply(author, "I couldn't find that person in my database!");
+
                     if (message.length > 85)
                         return reply(author, "Sadly the last message was long big to be sent here.");
                     reply(author, "Last message: " + message.message);
@@ -207,17 +210,6 @@ const commandHandler = (author, text, command, args, allChat) => {
         bot.equip(bot.inventory.items().filter(i => i.name === "fishing_rod")[0], "hand", () => {
             interval = setInterval(() => bot.activateItem(), 132);
         });
-    }
-
-    if (command === "updategraph")
-        updateGraph().catch(console.error);
-
-    if (command === "flags") {
-        const target = args[0] ? args[0] : author;
-        const flags = getFlags()[target];
-        if (!flags) return;
-
-        reply(author, flags.toString());
     }
 
     if (command === "eval") {

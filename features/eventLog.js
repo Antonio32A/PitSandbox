@@ -41,11 +41,13 @@ const eventLog = message => {
 
     if (message.match(joinRegex)) {
         const username = message.match(joinRegex)[1];
+        logAction(username, "logged in.");
         logEvent(username, 5, "login");
     }
 
     if (message.match(leaveRegex)) {
         const username = message.match(leaveRegex)[1];
+        logAction(username, "logged out.");
         logEvent(username, 5, "logout");
     }
 };
