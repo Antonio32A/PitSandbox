@@ -103,6 +103,7 @@ const init = () => {
     bot.loadPlugin(pathfinder);
 
     bot.mcData = require("minecraft-data")(bot.version);
+    bot.once("kicked", console.log);
     bot.once("end", () => setTimeout(init, 60000));
     bot.on("message", message => onMessage(message));
     bot.on("windowOpen", onWindowOpen);
