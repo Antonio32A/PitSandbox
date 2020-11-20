@@ -1,0 +1,8 @@
+config.json
+main.json
+shit.js
+test.js
+package-lock.json
+data/graph.json
+node_modules/
+db/
