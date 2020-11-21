@@ -17,7 +17,8 @@ const options = {
     port: 25565,
     version: "1.8.9",
     username: email,
-    password: password
+    password: password,
+    hideErrors: true
 };
 
 global.client = new Commando.Client({
@@ -29,7 +30,7 @@ const { autoReply } = require("./features/autoreply");
 const { commandHandler } = require("./features/commandHandler");
 // const { onTime } = require("./features/tps");
 const { bridge } = require("./features/bridge");
-const { eventLog } = require("./features/eventLog");
+const { eventLog, luckyshotOnTime } = require("./features/eventLog");
 const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
 require("./features/baltop");
@@ -106,7 +107,9 @@ const init = () => {
     bot.once("end", () => setTimeout(init, 60000));
     bot.on("message", message => onMessage(message));
     bot.on("windowOpen", onWindowOpen);
+    // bot.on("error", console.error);
     // bot.on("time", onTime);
+    bot.on("time", luckyshotOnTime);
 
     // bot.on("spawn", () => mineflayerViewer(bot, { port: 3000 }));
 

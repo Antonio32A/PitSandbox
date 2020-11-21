@@ -1,4 +1,4 @@
-const { waitForMessage } = require("./utils");
+const { waitForMessage, getEnchantmentsOfItem } = require("./utils");
 const { logEvent } = require("./database");
 const { eventLogChannel } = require("../config");
 const { MessageEmbed } = require("discord.js");
@@ -9,6 +9,20 @@ const combatLogRegex = /^(\w{3,16}) has logged out in combat!$/;
 const streakRegex = /^STREAK! of (?<amount>\d+) kills by \[120] (?<username>\w{3,16})$/;
 const joinRegex = /^WELCOME BACK! (\w{3,16}) just joined the server!$/;
 const leaveRegex = /^OOF! (\w{3,16}) just left the server!$/;
+let lastSent = Date.now();
+
+const luckyshotOnTime = () => {
+    Object.values(bot.players).forEach(player => {
+        if (!player.entity) return;
+
+        const enchantments = getEnchantmentsOfItem(player.entity.heldItem);
+        if (enchantments.includes("Lucky Shot III") && (((Date.now() - lastSent) / 1000) > 10)) {
+            bot.chat(`${player.username} is using Lucky Shot!`);
+            logEvent(player.username, 3, "luckyshot");
+            lastSent = Date.now();
+        }
+    });
+};
 
 const eventLog = message => {
     message = message.toString();
@@ -60,4 +74,4 @@ const logAction = (username, action) => {
     channel.send(embed).catch(console.error);
 };
 
-module.exports = { eventLog };
+module.exports = { eventLog, luckyshotOnTime };
