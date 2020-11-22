@@ -44,8 +44,10 @@ module.exports = class Command {
         }
 
         if (this.ownerOnly) {
-            if (author !== "Antonio32A")
+            if (author !== "Antonio32A") {
+                authorReply(author, "You need the be the bot's owner to use this!");
                 return false;
+            }
         }
         return true;
     }
