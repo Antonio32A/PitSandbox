@@ -1,176 +1,31 @@
-const {
-    waitForMessage,
-    getEnchantmentsOfItem,
-    chatReply,
-    authorReply,
-    fetchMinecraftUUID,
-    removeFormatting
-} = require("./utils");
+const { authorReply, fetchMinecraftUUID } = require("./utils");
+const fs = require("fs");
 const { getPlayer, updatePlayer } = require("./database");
-const { commandWhitelist, commandBlacklist } = require("../config.json");
 const Movements = require("mineflayer-pathfinder").Movements;
 const { GoalNear, GoalFollow } = require("mineflayer-pathfinder").goals;
-const whois = require("../data/whois.json");
 
 let interval = null;
+let commands = {};
 
-const commandHandler = (author, text, command, args, allChat) => {
-    if (commandBlacklist.includes(author)) return;
+fs.readdirSync("commands").forEach(file => {
+    if (file !== "command.js") {
+        file = file.replace(".js", "");
+        let Command = require(`../commands/${file}`);
+        Command = new Command();
 
-    let reply;
-    if (allChat)
-        reply = chatReply;
-    else
-        reply = authorReply;
-
-    if (command === "helditem") {
-        const target = args[0] ? args[0] : author;
-        if (commandWhitelist.includes(target))
-            return reply(author, "That player is immune to that command!");
-
-        const players = Object.values(bot.entities)
-            .filter(e => e.type === "player")
-            .filter(p => p.username === target);
-
-        if (players.length === 0)
-            return reply(author, `I cannot find ${target}.`);
-        const player = players[0];
-        const enchantments = getEnchantmentsOfItem(player.heldItem)
-
-        if (enchantments.length === 0)
-            return reply(author, `⚔ ${player.username} ➜ Nothing!`);
-        reply(author, `⚔ ${player.username} ➜ ${enchantments.join(", ")}`);
+        const names = [Command.getName(), ...Command.getAliases()];
+        names.forEach(name => commands[name] = Command);
     }
+});
 
-    if (command === "pants") {
-        const target = args[0] ? args[0] : author;
-        if (commandWhitelist.includes(target))
-            return reply(author, "That player is immune to that command!");
-
-        const players = Object.values(bot.entities)
-            .filter(e => e.type === "player")
-            .filter(p => p.username === target);
-
-        if (players.length === 0)
-            return reply(author, `I cannot find ${target}.`);
-        const player = players[0];
-        const enchantments = getEnchantmentsOfItem(player.equipment[2]);
-
-        if (enchantments.length === 0)
-            return reply(author, `❤ ${player.username} ➜ Nothing!`);
-        reply(author, `❤ ${player.username} ➜ ${enchantments.join(", ")}`);
-    }
-
-    if (command === "tps") {
-        bot.chat("/tps");
-        waitForMessage(/TPS from last 1m, 5m, 15m: (?<tps>[\d.]+), [\d.]+, [\d.]+/, 3000)
-            .then(response =>
-                reply(author, `✯ Server TPS ➜ Client: ${bot.getTps()} | Server: ${response.groups.tps}`)
-            ).catch(() => reply(author, `✯ Server TPS ➜ Client: ${bot.getTps()}`));
-    }
-
-    if (command === "show") {
-        const target = author;
-        if (commandWhitelist.includes(target))
-            return reply(author, "That player is immune to that command!");
-
-        const players = Object.values(bot.entities)
-            .filter(e => e.type === "player")
-            .filter(p => p.username === target);
-
-        if (players.length === 0)
-            return reply(author, `I cannot find ${target}.`);
-        const player = players[0];
-        const item = player.heldItem;
-        let name = item?.nbt?.[value]?.display?.value?.Name?.value;
-
-        if (!item)
-            return reply(author, `${player.username} shows themselves their fist!`);
-        if (!name)
-            name = item.displayName;
-
-        const count = item.count === 0 ? "" : ` ${item.count}x `;
-        name = removeFormatting(name);
-        authorReply(author, `${player.username} shows themselves ${count}[${name}] (${item.displayName})`);
-    }
-
-    if (command === "tammy")
-        reply(author, "tammy wammy :D");
-
-    if (command === "whois") {
-        const target = args[0];
-        if (!target) return;
-
-        const text = whois[target.toLowerCase()];
-        if (!text)
-            return reply(author, "idk man");
-        reply(author, text);
-    }
-
-    if (command === "discord") {
-        const target = args[0] ? args[0] : author;
-        fetchMinecraftUUID(target)
-            .then(uuid =>
-                getPlayer({ uuid }).then(verified => {
-                    if (!verified)
-                        return reply(author, `▲ ${target} ➜ Discord not linked.`);
-
-                    let user = client.users.cache.get(verified.id);
-                    if (!user)
-                        user = { username: "unknown" };
-
-                    reply(author, `▲ ${target} ➜ ${user.username} (${verified.id})`)
-                })
-            );
-    }
-
-    if (command === "messagecount") {
-        getPlayer({ ign: author }).then(verified => {
-            if (!verified)
-                return reply(author, "You must be verified to use this command!");
-
-            bot.db.collection("chat").find({ author }).count()
-                .then(amount => reply(author, `You have sent ${amount} messages!`)).catch(console.error);
-        }).catch(console.error);
-    }
-
-    if (command === "firstmessage") {
-        const target = args[0] ? args[0] : author;
-        getPlayer({ign: author}).then(verified => {
-            if (!verified)
-                return reply(author, "You must be verified to use this command!");
-
-            bot.db.collection("chat").findOne({author: target}, {sort: {timestamp: 1}})
-                .then(message => {
-                    if (!message)
-                        return reply(author, "I couldn't find that person in by database!");
-
-                    if (message.length > 85)
-                        return reply(author, "Sadly the first message was too long to be sent here.");
-                    reply(author, "First message: " + message.message);
-                }).catch(console.error);
-        }).catch(console.error);
-    }
-
-    if (command === "lastmessage") {
-        const target = args[0] ? args[0] : author;
-        getPlayer({ign: author}).then(verified => {
-            if (!verified)
-                return reply(author, "You must be verified to use this command!");
-
-            bot.db.collection("chat").findOne({ author: target }, {sort: {timestamp: -1}})
-                .then(message => {
-                    if (!message)
-                        return reply(author, "I couldn't find that person in my database!");
-
-                    if (message.length > 85)
-                        return reply(author, "Sadly the last message was long big to be sent here.");
-                    reply(author, "Last message: " + message.message);
-                }).catch(console.error);
-        }).catch(console.error);
+const commandHandler = (author, raw, command, args) => {
+    command = command.toLowerCase();
+    if (Object.keys(commands).includes(command)) {
+       commands[command].execute(author, args, raw).catch(console.error);
     }
 
     if (author !== "Antonio32A") return;
+    const reply = authorReply;
 
     if (command === "come") {
         const pos = bot.players[author].entity.position;

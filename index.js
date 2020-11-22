@@ -59,13 +59,14 @@ const onMessage = message => {
     const chatMatch = allChatRegex.exec(message);
     const joinMatch = joinRegex.exec(message);
 
+    // todo: clean this up
     if (msgMatch) {
         const author = msgMatch.groups.author;
         const text = msgMatch.groups.message;
         const commandName = text.split(" ")[0];
         const commandArguments = text.split(" ");
         commandArguments.shift();
-        commandHandler(author, text, commandName, commandArguments, false);
+        commandHandler(author, message, commandName, commandArguments);
     }
     else if (chatMatch) {
         const author = chatMatch.groups.author;
@@ -73,7 +74,7 @@ const onMessage = message => {
         const commandName = text.split(" ")[0];
         const commandArguments = text.split(" ");
         commandArguments.shift();
-        commandHandler(author, text, commandName, commandArguments, false);
+        commandHandler(author, message, commandName, commandArguments);
     }
 
     if (joinMatch) {
