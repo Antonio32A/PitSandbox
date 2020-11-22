@@ -10,6 +10,7 @@ module.exports = class Command {
         this.ownerOnly = false;
         this.bypassBlacklist = false;
         this.ignoreWhitelisted = false;
+        this.check = null;
     }
 
     getAliases() {
@@ -49,6 +50,9 @@ module.exports = class Command {
                 return false;
             }
         }
+
+        if (this.check)
+            return this.check(author, args, raw);
         return true;
     }
 

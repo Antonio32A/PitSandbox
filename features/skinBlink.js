@@ -1,7 +1,5 @@
 let show = false;
 
-const skinBlinkOnSpawn = () => setInterval(toggleSkin, 500);
-
 const toggleSkin = () => {
     show = !show
     bot.setSettings({
@@ -16,4 +14,4 @@ const toggleSkin = () => {
     });
 };
 
-module.exports = { skinBlinkOnSpawn };
+module.exports = { toggleSkin };

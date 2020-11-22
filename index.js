@@ -31,7 +31,7 @@ const { commandHandler } = require("./features/commandHandler");
 // const { onTime } = require("./features/tps");
 const { bridge } = require("./features/bridge");
 const { eventLog, luckyshotOnTime } = require("./features/eventLog");
-const { skinBlinkOnSpawn } = require("./features/skinBlink");
+const { toggleSkin } = require("./features/skinBlink");
 const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
 require("./features/baltop");
@@ -112,7 +112,7 @@ const init = () => {
     // bot.on("error", console.error);
     // bot.on("time", onTime);
     bot.on("time", luckyshotOnTime);
-    bot.on("spawn", skinBlinkOnSpawn);
+    bot.on("time", toggleSkin);
 
     // bot.on("spawn", () => mineflayerViewer(bot, { port: 3000 }));
 
