@@ -12,34 +12,34 @@ const autoReply = message => {
 
     if (message.match(votebanRegex)) {
         const username = message.match(votebanRegex)[1];
-        bot.chat(`L ${username}.`);
+        bot.chat(`&eL &c${username}.`);
     }
 
     if (message.match(votebanStartRegex))
         bot.chat("/vote yes");
 
     if (message.match(anticheatBanRegex)) {
-        waitForMessage(/OOF! (\w{3,16}) just left the server!/, 1000)
-            .then(response => bot.chat(`L ${response[1]}.`))
+        waitForMessage(/^OOF! (\w{3,16}) just left the server!$/, 1000)
+            .then(response => bot.chat(`&rL &c${response[1]}.`))
             .catch(console.error);
     }
 
     if (message.match(combatLogRegex)) {
         const username = message.match(combatLogRegex)[1];
-        bot.chat(`yikes ${username}.`);
+        bot.chat(`&cyikes ${username}.`);
     }
 
     if (message.match(joinRegex)) {
         const username = message.match(joinRegex)[1];
         if (username === "Antonio32A")
-            bot.chat("welcome back master");
+            bot.chat("&awelcome back master");
         bot.chat(`/msg ${username} Boop!`);
     }
 
     if (message.match(leaveRegex)) {
         const username = message.match(leaveRegex)[1];
         if (username === "Antonio32A")
-            bot.chat("goodbye master");
+            bot.chat("&9goodbye master");
     }
 };
 

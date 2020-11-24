@@ -43,10 +43,10 @@ client.on("message", async message => {
     }
 
     const text = replaceDiscordIds(message.content);
-    if (text.includes("\n") || text.length > 75)
+    if (text.includes("\n") || text.length > 70)
         return message.channel.send("That message is too big or has newlines in it!");
 
-    bot.chat(`${verified.ign} > ${text}`);
+    bot.chat(`&9${verified.ign} &e> &f${text}`);
 });
 
 module.exports = { bridge }

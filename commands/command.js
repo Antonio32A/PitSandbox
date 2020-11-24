@@ -52,7 +52,7 @@ module.exports = class Command {
         }
 
         if (this.check)
-            return this.check(author, args, raw);
+            return await this.check(author, args, raw);
         return true;
     }
 
@@ -67,7 +67,6 @@ module.exports = class Command {
                 // todo: better error handler
                 console.error(error);
             }
-        } else
-            console.log(`${author} no perms bad lol.`);
+        }
     }
 };
