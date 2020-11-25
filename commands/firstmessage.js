@@ -15,7 +15,7 @@ module.exports = class FirstMessageCommand extends Command {
         if (!message)
             return "I couldn't find that person in my database!";
         if (message.length > 85)
-            return "Sadly the first message was long big to be sent here.";
+            return "Sadly the first message was too long to be sent here.";
 
         return "First message: " + message.message;
     }

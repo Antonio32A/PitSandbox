@@ -15,7 +15,7 @@ module.exports = class LastMessageCommand extends Command {
         if (!message)
             return "I couldn't find that person in my database!";
         if (message.length > 85)
-            return "Sadly the last message was long big to be sent here.";
+            return "Sadly the last message was too long to be sent here.";
 
         return "Last message: " + message.message;
     }

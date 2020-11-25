@@ -31,9 +31,7 @@ module.exports = class BuyDonatorCommand extends Command {
 
         try {
             const msg = await waitForMessage(`^\\$([\\d,.]+) has been received from ${author}\\.$`, 30000);
-            console.log(msg);
             const amount = msg[1].replace(/,/g, "");
-            console.log(parseFloat(amount));
             if (parseFloat(amount) < 50000)
                 return "That amount of money is less than 50K!";
 

@@ -21,7 +21,6 @@ module.exports = class Sharpness3CountCommand extends Command {
         try {
             const window = await waitForWindow(1000);
             const items = window.slots;
-            console.log(items.filter(i => i?.nbt?.value?.ench !== undefined).map(i => i?.nbt?.value?.ench));
             const count = items.filter(i => i?.nbt?.value?.ench?.value?.value[0]?.lvl?.value === 3).length;
             return `☣ ${target} ➜ ${count}x Sharpness 3`;
         } catch {
