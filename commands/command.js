@@ -8,6 +8,7 @@ module.exports = class Command {
         this.aliases = [];
         this.verifiedOnly = false;
         this.ownerOnly = false;
+        this.donatorOnly = false;
         this.bypassBlacklist = false;
         this.ignoreWhitelisted = false;
         this.check = null;
@@ -40,6 +41,20 @@ module.exports = class Command {
             const verified = await getPlayer({ ign: author });
             if (!verified) {
                 authorReply(author, "You must be verified to use this command!");
+                return false;
+            }
+        }
+
+        if (this.donatorOnly) {
+            try {
+                const player = await getPlayer({ ign: author });
+
+                if (!player?.donator) {
+                    authorReply(author, "This command is only for bot donators (50K). !buydonator");
+                    return false;
+                }
+            } catch (error) {
+                console.error(error);
                 return false;
             }
         }

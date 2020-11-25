@@ -9,7 +9,7 @@ module.exports = class LastMessageCommand extends Command {
     }
 
     async run(author, args, raw) {
-        const target = args[0] ? args[0] : author;
+        const target = args[0] ?? author;
         const message = await bot.db.collection("chat").findOne({ author: target }, { sort: { timestamp: -1 } })
 
         if (!message)

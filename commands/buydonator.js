@@ -7,6 +7,7 @@ module.exports = class BuyDonatorCommand extends Command {
         super();
         this.name = "buydonator";
         this.aliases = ["buydono"];
+        this.verifiedOnly = true;
         this.check = async author => {
             try {
                 const uuid = await fetchMinecraftUUID(author);
@@ -18,7 +19,6 @@ module.exports = class BuyDonatorCommand extends Command {
                 }
                 return true;
             } catch {
-                authorReply(author, "Invalid username?");
                 return false;
             }
         };

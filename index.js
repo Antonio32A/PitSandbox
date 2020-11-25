@@ -1,6 +1,5 @@
 const mineflayer = require("mineflayer");
 const pathfinder = require("mineflayer-pathfinder").pathfinder;
-// const mineflayerViewer = require("prismarine-viewer").mineflayer;
 const tpsPlugin = require("mineflayer-tps")(mineflayer);
 const Commando = require("discord.js-commando");
 const MongoClient = require("mongodb").MongoClient;
@@ -35,6 +34,7 @@ const { toggleSkin } = require("./features/skinBlink");
 const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
 require("./features/baltop");
+require("./features/playerlist");
 
 client.login(token);
 client.registry
@@ -56,27 +56,7 @@ const onMessage = message => {
 
     console.log(message.toAnsi());
     message = message.toString();
-    const msgMatch = messageRegex.exec(message);
-    const chatMatch = allChatRegex.exec(message);
     const joinMatch = joinRegex.exec(message);
-
-    // todo: clean this up
-    if (msgMatch) {
-        const author = msgMatch.groups.author;
-        const text = msgMatch.groups.message;
-        const commandName = text.split(" ")[0];
-        const commandArguments = text.split(" ");
-        commandArguments.shift();
-        commandHandler(author, message, commandName, commandArguments);
-    }
-    else if (chatMatch) {
-        const author = chatMatch.groups.author;
-        const text = chatMatch.groups.message;
-        const commandName = text.split(" ")[0];
-        const commandArguments = text.split(" ");
-        commandArguments.shift();
-        commandHandler(author, message, commandName, commandArguments);
-    }
 
     if (joinMatch) {
         const username = joinMatch.groups.ign;
@@ -86,8 +66,20 @@ const onMessage = message => {
         try {
             const user = client.users.cache.get(toNotify);
             user.send(`**${username}** has logged in!`);
-        } catch (e) {} // forbidden, or unknown user
+        } catch {} // forbidden, or unknown user
     }
+
+    const msgMatch = messageRegex.exec(message);
+    const chatMatch = allChatRegex.exec(message);
+    const match = msgMatch ?? chatMatch;
+    if (!match) return;
+
+    const author = match.groups.author;
+    const text = match.groups.message;
+    const commandName = text.split(" ")[0];
+    const commandArguments = text.split(" ");
+    commandArguments.shift();
+    commandHandler(author, message, commandName, commandArguments);
 };
 
 const onWindowOpen = window => {
@@ -109,12 +101,8 @@ const init = () => {
     bot.once("end", () => setTimeout(init, 60000));
     bot.on("message", message => onMessage(message));
     bot.on("windowOpen", onWindowOpen);
-    // bot.on("error", console.error);
-    // bot.on("time", onTime);
     bot.on("time", luckyshotOnTime);
     bot.on("time", toggleSkin);
-
-    // bot.on("spawn", () => mineflayerViewer(bot, { port: 3000 }));
 
     const r = repl.start("> ")
     r.context.bot = bot

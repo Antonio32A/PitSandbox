@@ -10,7 +10,7 @@ module.exports = class PantsCommands extends Command {
     }
 
     async run(author, args, raw) {
-        const target = args[0] ? args[0] : author;
+        const target = args[0] ?? author;
 
         const player = Object.values(bot.players).filter(p => p.username === target)[0];
         if (!player?.entity)

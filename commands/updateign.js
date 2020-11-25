@@ -10,7 +10,7 @@ module.exports = class UpdateIGNCommand extends Command {
     }
 
     async run(author, args, raw) {
-        const target = args[0] ? args[0] : author;
+        const target = args[0] ?? author;
         try {
             const uuid = await fetchMinecraftUUID(target);
             const data = await getPlayer({ uuid });

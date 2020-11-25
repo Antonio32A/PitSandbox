@@ -5,10 +5,11 @@ module.exports = class PitPlaytimeCommand extends Command {
     constructor() {
         super();
         this.name = "pitplaytime";
+        this.verifiedOnly = true;
     }
 
     async run(author, args, raw) {
-        const target = args[0] ? args[0] : author;
+        const target = args[0] ?? author;
         if (!target.match(/\w{3,16}/))
             return "Invalid username.";
 

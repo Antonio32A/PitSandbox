@@ -15,6 +15,11 @@ const waitForMessage = (criteria, timeout) =>
         bot.once("message", onMessage);
     });
 
+const waitForWindow = timeout =>
+    new Promise((resolve, reject) => {
+        setTimeout(reject, timeout);
+        bot.once("windowOpen", resolve);
+    });
 
 const enchRegex = /(&9[\w :\-']+)/gm;
 
@@ -139,5 +144,6 @@ module.exports = {
     fetchMinecraftUUID,
     authorReply,
     chatReply,
-    replaceDiscordIds
+    replaceDiscordIds,
+    waitForWindow
 };

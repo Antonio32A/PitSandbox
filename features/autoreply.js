@@ -12,7 +12,7 @@ const autoReply = message => {
 
     if (message.match(votebanRegex)) {
         const username = message.match(votebanRegex)[1];
-        bot.chat(`&eL &c${username}.`);
+        bot.chat(`&4L &c${username}.`);
     }
 
     if (message.match(votebanStartRegex))
@@ -20,7 +20,7 @@ const autoReply = message => {
 
     if (message.match(anticheatBanRegex)) {
         waitForMessage(/^OOF! (\w{3,16}) just left the server!$/, 1000)
-            .then(response => bot.chat(`&rL &c${response[1]}.`))
+            .then(response => bot.chat(`&4L &c${response[1]}.`))
             .catch(console.error);
     }
 

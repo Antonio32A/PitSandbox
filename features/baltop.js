@@ -1,4 +1,4 @@
-const { baltopChannel, baltopMessage } = require("../config.json")
+const { baltopChannel, baltopMessage } = require("../config.json");
 const { waitForMessage } = require("./utils");
 const { MessageEmbed } = require("discord.js");
 
@@ -32,7 +32,7 @@ setInterval(async () => {
         .setTitle("Baltop")
         .setFooter("Last updated at")
         .setTimestamp(Date.now())
-        .setDescription(leaderboard);
+        .setDescription(leaderboard)
 
     await message.edit(embed);
 }, 300000);

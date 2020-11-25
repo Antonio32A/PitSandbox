@@ -7,26 +7,12 @@ module.exports = class VotekickCommand extends Command {
         super();
         this.name = "votekick";
         this.aliases = ["begone", "voteban"];
-        this.check = async author => {
-            try {
-                const uuid = await fetchMinecraftUUID(author);
-                const player = await getPlayer({ uuid });
-
-                if (!player?.donator) {
-                    authorReply(author, "This command is only for bot donators (50K). !buydonator");
-                    return false;
-                }
-                return true;
-            } catch {
-                authorReply(author, "Invalid username?");
-                return false;
-            }
-        };
+        this.donatorOnly = true;
     }
 
     async run(author, args, raw) {
         // this is here as a joke, because why not :^)
-        const target = args[0] ? args[0] : author;
+        const target = args[0] ?? author;
 
         if (!target.match(/\w{3,16}/))
             return "Invalid username!";

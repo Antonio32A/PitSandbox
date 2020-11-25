@@ -7,10 +7,11 @@ module.exports = class PitPrestigeCommand extends Command {
         super();
         this.name = "pitprestige";
         this.aliases = ["pitpres", "pitlevel", "pitlvl"];
+        this.verifiedOnly = true;
     }
 
     async run(author, args, raw) {
-        const target = args[0] ? args[0] : author;
+        const target = args[0] ?? author;
         if (!target.match(/\w{3,16}/))
             return "Invalid username.";
 
