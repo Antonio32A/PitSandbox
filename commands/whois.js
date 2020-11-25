@@ -1,4 +1,4 @@
-const Command = require("../commands/command");
+const Command = require("./command");
 const whois = require("../data/whois.json");
 
 module.exports = class WhoIsCommand extends Command {

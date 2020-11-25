@@ -1,4 +1,4 @@
-const Command = require("../commands/command");
+const Command = require("./command");
 const { getEnchantmentsOfItem } = require("../features/utils");
 
 module.exports = class HeldItemCommand extends Command {

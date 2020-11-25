@@ -1,4 +1,4 @@
-const Command = require("../commands/command");
+const Command = require("./command");
 const { fetchMinecraftUUID } = require("../features/utils");
 const { getPlayer, updatePlayer } = require("../features/database");
 

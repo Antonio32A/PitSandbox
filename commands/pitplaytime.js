@@ -1,4 +1,4 @@
-const Command = require("../commands/command");
+const Command = require("./command");
 const fetch = require("node-fetch");
 
 module.exports = class PitPlaytimeCommand extends Command {

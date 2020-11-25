@@ -1,4 +1,4 @@
-const Command = require("../commands/command");
+const Command = require("./command");
 
 module.exports = class MessageCountCommand extends Command {
     constructor() {

@@ -1,7 +1,5 @@
-const Command = require("../commands/command");
-const { fetchMinecraftUUID, authorReply, waitForMessage } = require("../features/utils");
-const { getPlayer } = require("../features/database");
-
+const Command = require("./command");
+const { waitForMessage } = require("../features/utils");
 module.exports = class VotekickCommand extends Command {
     constructor() {
         super();

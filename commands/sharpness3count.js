@@ -1,5 +1,5 @@
-const Command = require("../commands/command");
-const { getEnchantmentsOfItem, waitForWindow } = require("../features/utils");
+const Command = require("./command");
+const { waitForWindow } = require("../features/utils");
 
 module.exports = class Sharpness3CountCommand extends Command {
     constructor() {

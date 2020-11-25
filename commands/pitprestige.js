@@ -1,4 +1,4 @@
-const Command = require("../commands/command");
+const Command = require("./command");
 const { removeFormatting } = require("../features/utils");
 const fetch = require("node-fetch");
 

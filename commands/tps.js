@@ -1,4 +1,4 @@
-const Command = require("../commands/command");
+const Command = require("./command");
 const { waitForMessage } = require("../features/utils");
 
 module.exports = class TpsCommand extends Command {
