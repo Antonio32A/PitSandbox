@@ -31,6 +31,7 @@ const { commandHandler } = require("./features/commandHandler");
 const { bridge } = require("./features/bridge");
 const { eventLog, luckyshotOnTime } = require("./features/eventLog");
 const { toggleSkin } = require("./features/skinBlink");
+const { onMessageKillstreak } = require("./features/killstreak");
 const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
 require("./features/baltop");
@@ -53,6 +54,7 @@ const onMessage = message => {
     autoReply(message);
     bridge(message);
     eventLog(message);
+    onMessageKillstreak(message);
 
     console.log(message.toAnsi());
     message = message.toString();

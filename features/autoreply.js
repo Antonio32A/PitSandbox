@@ -1,8 +1,8 @@
-const { waitForMessage } = require("./utils");
+const { joinMessages } = require("../config.json");
 
 const votebanStartRegex = /^\[Voteban] \w{3,16} started a vote to ban \w{3,16}! \d+ votes are required\.$/;
 const votebanRegex = /^\[Voteban] (\w{3,16}) got banned due to a voting!$/;
-const anticheatBanRegex = /^ARES > A player has been removed from your game for cheating\.$/;
+const anticheatBanRegex = /^ARES > (\w{3,16}) has been removed from your game for cheating\.$/;
 const combatLogRegex = /^(\w{3,16}) has logged out in combat!$/;
 const joinRegex = /^WELCOME BACK! (\w{3,16}) just joined the server!$/;
 const leaveRegex = /^OOF! (\w{3,16}) just left the server!$/;
@@ -19,9 +19,7 @@ const autoReply = message => {
         bot.chat("/vote yes");
 
     if (message.match(anticheatBanRegex)) {
-        waitForMessage(/^OOF! (\w{3,16}) just left the server!$/, 1000)
-            .then(response => bot.chat(`&4L &c${response[1]}.`))
-            .catch(console.error);
+        bot.chat(`&4L &c${message.match(anticheatBanRegex)[1]}.`);
     }
 
     if (message.match(combatLogRegex)) {
@@ -31,8 +29,10 @@ const autoReply = message => {
 
     if (message.match(joinRegex)) {
         const username = message.match(joinRegex)[1];
-        if (username === "Antonio32A")
-            bot.chat("&awelcome back master");
+        const msg = joinMessages[username];
+
+        if (msg)
+            bot.chat(msg);
         bot.chat(`/msg ${username} Boop!`);
     }
 
