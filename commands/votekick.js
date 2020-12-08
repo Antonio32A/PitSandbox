@@ -1,11 +1,28 @@
 const Command = require("./command");
-const { waitForMessage } = require("../features/utils");
+const { waitForMessage, authorReply } = require("../features/utils");
+const { getPlayer } = require("../features/database");
+
 module.exports = class VotekickCommand extends Command {
     constructor() {
         super();
         this.name = "votekick";
         this.aliases = ["begone", "voteban"];
         this.donatorOnly = true;
+        this.check = async author => {
+            try {
+                const player = await getPlayer({ ign: author });
+
+                if (player.votekickBanned) {
+                    authorReply(author, "You are banned from this command. (votekick abuse)");
+                    return false;
+                }
+                return true
+            } catch (error) {
+                console.error(error)
+                return false;
+            }
+
+        }
     }
 
     async run(author, args, raw) {

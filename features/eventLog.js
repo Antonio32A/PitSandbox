@@ -4,7 +4,7 @@ const { eventLogChannel } = require("../config");
 const { MessageEmbed } = require("discord.js");
 
 const votebanRegex = /^\[Voteban] (\w{3,16}) got banned due to a voting!$/;
-const anticheatBanRegex = /^ARES > A player has been removed from your game for cheating\.$/;
+const anticheatBanRegex = /^ARES > (\w{3,16}) has been removed from your game for cheating\.$/;
 const combatLogRegex = /^(\w{3,16}) has logged out in combat!$/;
 const streakRegex = /^STREAK! of (?<amount>\d+) kills by \[120] (?<username>\w{3,16})$/;
 const joinRegex = /^WELCOME BACK! (\w{3,16}) just joined the server!$/;
@@ -34,11 +34,8 @@ const eventLog = message => {
     }
 
     if (message.match(anticheatBanRegex)) {
-        waitForMessage(/OOF! (\w{3,16}) just left the server!/, 1000)
-            .then(response => {
-                logAction(response[1], "banned by the anticheat.");
-                logEvent(response[1], 1, "anticheatban");
-            }).catch(console.error);
+        logAction(response[1], "banned by the anticheat.");
+        logEvent(response[1], 1, "anticheatban");
     }
 
     if (message.match(combatLogRegex)) {
