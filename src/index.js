@@ -5,7 +5,7 @@ const Commando = require("discord.js-commando");
 const MongoClient = require("mongodb").MongoClient;
 const repl = require("repl");
 
-const { email, password, plotly, token, joinNotify, mongoURI } = require("./config.json");
+const { email, password, plotly, token, joinNotify, mongoURI } = require("../config.json");
 const messageRegex = /^\[(?<author>\w{3,16}) -> me] (?<message>.+)$/;
 const allChatRegex = /^\[XXXV-120] (?<rank>\[\w+])? (?<author>\w{3,16}): !(?<message>.+)$/;
 const joinRegex = /^WELCOME BACK! (?<ign>\w{3,16}) just joined the server!$/;
@@ -27,7 +27,6 @@ global.client = new Commando.Client({
 
 const { autoReply } = require("./features/autoreply");
 const { commandHandler } = require("./features/commandHandler");
-// const { onTime } = require("./features/tps");
 const { bridge } = require("./features/bridge");
 const { eventLog, luckyshotOnTime } = require("./features/eventLog");
 const { toggleSkin } = require("./features/skinBlink");

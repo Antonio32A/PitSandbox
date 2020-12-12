@@ -1,4 +1,4 @@
-const { playerlistChannel, playerlistMessage, footer } = require("../config.json");
+const { playerlistChannel, playerlistMessage, footer } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
 
 setInterval(async () => {

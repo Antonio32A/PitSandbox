@@ -1,6 +1,6 @@
 const { replaceDiscordIds } = require("./utils");
 const { getPlayer, logChatMessage } = require("./database");
-const { channel, footer } = require("../config.json");
+const { channel, footer } = require("../../config.json");
 const Discord = require("discord.js");
 
 const chatRegex = /^\[XXXV-120] (?<rank>\[\w+])? (?<author>\w{3,16}): (?<message>.+)$/;

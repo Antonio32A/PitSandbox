@@ -1,4 +1,4 @@
-const { commandBlacklist, commandWhitelist } = require("../config.json");
+const { commandBlacklist, commandWhitelist } = require("../../config.json");
 const { authorReply } = require("../features/utils");
 const { getPlayer } = require("../features/database");
 

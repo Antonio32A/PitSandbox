@@ -1,0 +1,21 @@
+{
+    "email": "e@mail",
+    "password": "p@assword",
+    "token": "mMmMmmmMMmMmMmM.mMMMmMm.MmMmmmMmmMmmMmmMmmmmmMMm",
+    "channel": "000000000000000000",
+    "footer": "patreon.com/dungeonutilities",
+    "joinNotify": {
+        "Antonio32A": "000000000000000000"
+    },
+    "joinMessages": {
+        "Antonio32A": "welcome back master"
+    },
+    "commandWhitelist": ["Antonio32A"],
+    "commandBlacklist": ["g1thub"],
+    "baltopChannel": "000000000000000000",
+    "baltopMessage": "000000000000000000",
+    "playerlistChannel": "000000000000000000",
+    "playerlistMessage": "000000000000000000",
+    "eventLogChannel": "000000000000000000",
+    "mongoURI": "mongodb://user:password@ip:port/?authSource=sandbox"
+}

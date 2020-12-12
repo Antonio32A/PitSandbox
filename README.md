@@ -38,5 +38,6 @@ To get donator do `!buydonator` and follow the instructions.
 DM me on Discord to claim these. 
 - `!pants`, `!helditem` and `!sharpness3count` bypass. (people cannot do it on you)
 - Discord join notifications when a specific person joins the server. (good for hunting I guess)
+- A custom join message!
 
 More coming soon!

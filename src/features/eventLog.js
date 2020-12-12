@@ -1,6 +1,6 @@
-const { waitForMessage, getEnchantmentsOfItem } = require("./utils");
+const { getEnchantmentsOfItem } = require("./utils");
 const { logEvent } = require("./database");
-const { eventLogChannel } = require("../config");
+const { eventLogChannel } = require("../../config");
 const { MessageEmbed } = require("discord.js");
 
 const votebanRegex = /^\[Voteban] (\w{3,16}) got banned due to a voting!$/;
@@ -34,8 +34,9 @@ const eventLog = message => {
     }
 
     if (message.match(anticheatBanRegex)) {
-        logAction(response[1], "banned by the anticheat.");
-        logEvent(response[1], 1, "anticheatban");
+        const target = message.match(anticheatBanRegex)[1];
+        logAction(target, "banned by the anticheat.");
+        logEvent(target, 1, "anticheatban");
     }
 
     if (message.match(combatLogRegex)) {

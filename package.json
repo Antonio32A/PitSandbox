@@ -4,7 +4,7 @@
   "description": "A Mineflayer bot for Harry's Pit Sandbox",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cd src && node index.js"
   },
   "author": "Antonio32A",
   "license": "",
@@ -18,7 +18,5 @@
     "mongodb": "^3.6.3",
     "node-fetch": "^2.6.1"
   },
-  "devDependencies": {
-    "nbt": "^0.8.1"
-  }
+  "devDependencies": {}
 }

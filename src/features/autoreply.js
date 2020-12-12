@@ -1,4 +1,4 @@
-const { joinMessages } = require("../config.json");
+const { joinMessages } = require("../../config.json");
 
 const votebanStartRegex = /^\[Voteban] \w{3,16} started a vote to ban \w{3,16}! \d+ votes are required\.$/;
 const votebanRegex = /^\[Voteban] (\w{3,16}) got banned due to a voting!$/;

@@ -1,4 +1,4 @@
-const { baltopChannel, baltopMessage } = require("../config.json");
+const { baltopChannel, baltopMessage } = require("../../config.json");
 const { waitForMessage } = require("./utils");
 const { MessageEmbed } = require("discord.js");
 
