@@ -35,6 +35,7 @@ const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
 require("./features/baltop");
 require("./features/playerlist");
+require("./features/inventory");
 
 client.login(token);
 client.registry

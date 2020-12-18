@@ -8,4 +8,9 @@ const logChatMessage = (rank, author, message, raw) =>
 const logEvent = (username, level, type, extra) =>
     bot.db.collection("events").insertOne({ username, level, type, extra, timestamp: Date.now() });
 
-module.exports = { getPlayer, updatePlayer, logChatMessage, logEvent };
+const getInventory = (query, options) => bot.db.collection("inventories").findOne(query, options);
+
+const updateInventory = (query, data) =>
+    bot.db.collection("inventories").updateOne(query, { $set: data }, { upsert: true });
+
+module.exports = { getPlayer, updatePlayer, logChatMessage, logEvent, getInventory, updateInventory };
