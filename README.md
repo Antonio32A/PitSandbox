@@ -9,6 +9,7 @@ A [Mineflayer](https://github.com/PrismarineJS/mineflayer) bot for **Harry's Pit
 - `{target}` means that it's an optional argument, which defaults, in `target`'s case to your username.
 - `<abc>` means that it's a required argument.
 - `[abc]` means that it's an optional argument, which doesn't default to anything.
+- `[abc:value]` means that it's an optional argument, which defaults to the value specified.
 
 ### Commands
 - `!help` - brings you here. o/
@@ -33,6 +34,7 @@ To get verified join the [Discord](https://discord.gg/Z2Hw86n5xu) and `-verify`.
 To get donator do `!buydonator` and follow the instructions.
 - `!votekick {target}` - Stats a vote to votekick the target.
 - `!sharpness3count {target}` - Displays target's amount of sharpness 3 swords.
+- `-inventory <username> [slot:-1]` - [Discord Command] Displays somebody's inventory, use -1 to display all items.
 
 ### Extra Donator Perks
 DM me on Discord to claim these. 
