@@ -33,9 +33,9 @@ const { toggleSkin } = require("./features/skinBlink");
 const { onMessageKillstreak } = require("./features/killstreak");
 const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
+const { InventoryCommand } = require("./features/inventory");
 require("./features/baltop");
 require("./features/playerlist");
-require("./features/inventory");
 
 client.login(token);
 client.registry
@@ -48,7 +48,8 @@ client.registry
         prefix: false,
         unknownCommand: false
     }).registerCommand(VerifyCommand)
-    .registerCommand(WhoIsCommand);
+    .registerCommand(WhoIsCommand)
+    .registerCommand(InventoryCommand);
 
 const onMessage = message => {
     autoReply(message);
