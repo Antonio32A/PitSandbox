@@ -66,10 +66,13 @@ const eventLog = message => {
 
     if (message.match(uberRegex)) {
         const username = message.match(uberRegex)[1];
-        try {
-            const user = client.users.cache.get(uberNotify);
-            user.send(`**${username}** has activated their UBERSTREAK!`);
-        } catch {} // forbidden, or unknown user
+
+        uberNotify.forEach(id => {
+            try {
+                const user = client.users.cache.get(id);
+                user.send(`**${username}** has activated their UBERSTREAK!`);
+            } catch {} // forbidden, or unknown user
+        })
     }
 };
 
