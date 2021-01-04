@@ -1,6 +1,6 @@
 const { getEnchantmentsOfItem } = require("./utils");
 const { logEvent } = require("./database");
-const { eventLogChannel } = require("../../config");
+const { eventLogChannel, uberNotify } = require("../../config");
 const { MessageEmbed } = require("discord.js");
 
 const votebanRegex = /^\[Voteban] (\w{3,16}) got banned due to a voting!$/;
@@ -9,6 +9,7 @@ const combatLogRegex = /^(\w{3,16}) has logged out in combat!$/;
 const streakRegex = /^STREAK! of (?<amount>\d+) kills by \[120] (?<username>\w{3,16})$/;
 const joinRegex = /^WELCOME BACK! (\w{3,16}) just joined the server!$/;
 const leaveRegex = /^OOF! (\w{3,16}) just left the server!$/;
+const uberRegex = /^MEGASTREAK! \[120] (\w{3,16}) activated UBERSTREAK!$/;
 let lastSent = Date.now();
 
 const luckyshotOnTime = () => {
@@ -61,6 +62,14 @@ const eventLog = message => {
         const username = message.match(leaveRegex)[1];
         logAction(username, "logged out.");
         logEvent(username, 5, "logout");
+    }
+
+    if (message.match(uberRegex)) {
+        const username = message.match(uberRegex)[1];
+        try {
+            const user = client.users.cache.get(uberNotify);
+            user.send(`**${username}** has activated their UBERSTREAK!`);
+        } catch {} // forbidden, or unknown user
     }
 };
 
