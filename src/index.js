@@ -106,6 +106,7 @@ const init = () => {
     bot.on("windowOpen", onWindowOpen);
     bot.on("time", luckyshotOnTime);
     bot.on("time", toggleSkin);
+    bot.on("spawn", () => bot.chat("/alerts"));
 
     const r = repl.start("> ")
     r.context.bot = bot

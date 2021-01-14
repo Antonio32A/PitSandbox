@@ -1,6 +1,6 @@
 const { getEnchantmentsOfItem } = require("./utils");
 const { logEvent } = require("./database");
-const { eventLogChannel, uberNotify } = require("../../config");
+const { eventLogChannel, uberNotify, alertsChannel } = require("../../config");
 const { MessageEmbed } = require("discord.js");
 
 const votebanRegex = /^\[Voteban] (\w{3,16}) got banned due to a voting!$/;
@@ -9,7 +9,8 @@ const combatLogRegex = /^(\w{3,16}) has logged out in combat!$/;
 const streakRegex = /^STREAK! of (?<amount>\d+) kills by \[120] (?<username>\w{3,16})$/;
 const joinRegex = /^WELCOME BACK! (\w{3,16}) just joined the server!$/;
 const leaveRegex = /^OOF! (\w{3,16}) just left the server!$/;
-const uberRegex = /^MEGASTREAK! \[120] (\w{3,16}) activated UBERSTREAK!$/;
+const uberRegex = /^MEGASTREAK! \[120] (\w{3,16}) activated (UBERSTREAK|HIGHLANDER)!$/;
+const alertRegex = /^ARES > (?<ign>\w{1,16}) failed (?<name>[\w ]+) (?<id>[\d\w]{1,3}) VL\[(?<amount>\d+)]$/;
 let lastSent = Date.now();
 
 const luckyshotOnTime = () => {
@@ -27,6 +28,20 @@ const luckyshotOnTime = () => {
 
 const eventLog = message => {
     message = message.toString();
+    const alerts = alertRegex.exec(message);
+
+    if (alerts) {
+        console.log(alerts);
+        const { ign, name, id, amount } = alerts.groups;
+        const channel = client.channels.cache.get(alertsChannel);
+        const embed = new MessageEmbed()
+            .setColor(parseInt(amount) < 10 ? "#00ff7e" : "#ff4c4c")
+            .setAuthor(
+                `${ign} failed ${name} ${id} [VL${amount}]`,
+                `https://minotar.net/helm/${ign}.png`
+            );
+        channel.send(embed).catch(console.error);
+    }
 
     if (message.match(votebanRegex)) {
         const username = message.match(votebanRegex)[1];
@@ -72,7 +87,7 @@ const eventLog = message => {
                 const user = client.users.cache.get(id);
                 user.send(`**${username}** has activated their UBERSTREAK!`);
             } catch {} // forbidden, or unknown user
-        })
+        });
     }
 };
 
