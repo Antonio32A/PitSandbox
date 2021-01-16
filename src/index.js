@@ -34,6 +34,7 @@ const { onMessageKillstreak } = require("./features/killstreak");
 const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
 const { InventoryCommand } = require("./features/inventory");
+const { EventsCommand } = require("./features/events");
 require("./features/baltop");
 require("./features/playerlist");
 
@@ -49,7 +50,8 @@ client.registry
         unknownCommand: false
     }).registerCommand(VerifyCommand)
     .registerCommand(WhoIsCommand)
-    .registerCommand(InventoryCommand);
+    .registerCommand(InventoryCommand)
+    .registerCommand(EventsCommand);
 
 const onMessage = message => {
     autoReply(message);
