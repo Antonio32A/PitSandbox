@@ -37,7 +37,7 @@ const eventLog = message => {
         const embed = new MessageEmbed()
             .setColor(parseInt(amount) < 10 ? "#00ff7e" : "#ff4c4c")
             .setAuthor(
-                `${ign} failed ${name} ${id} [VL${amount}]`,
+                `${ign} failed ${name} ${id} [VL${amount}] [${bot.players[ign]?.ping}]`,
                 `https://minotar.net/helm/${ign}.png`
             );
         channel.send(embed).catch(console.error);
