@@ -1,7 +1,7 @@
 const { Command } = require("discord.js-commando");
 const { MessageEmbed } = require("discord.js");
 const fetch = require("node-fetch");
-const url = "https://api.antonio32a.tech/events";
+const url = "https://api.antonio32a.com/events";
 
 class EventsCommand extends Command {
 	constructor(client) {
