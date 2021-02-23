@@ -7,7 +7,7 @@ const { MessageEmbed } = require("discord.js");
 const snooze = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const updateDatabase = async () => {
-    for (let player of Object.values(bot.players)) {
+    for (let player of Object.values(bot.players).filter(player => !player.username.includes("[NPC]"))) {
         bot.chat("/invsee " + player.username);
 
         try {

@@ -31,16 +31,16 @@ const eventLog = message => {
     const alerts = alertRegex.exec(message);
 
     if (alerts) {
-        console.log(alerts);
         const { ign, name, id, amount } = alerts.groups;
         const channel = client.channels.cache.get(alertsChannel);
         const embed = new MessageEmbed()
             .setColor(parseInt(amount) < 10 ? "#00ff7e" : "#ff4c4c")
             .setAuthor(
-                `${ign} failed ${name} ${id} [VL${amount}] [${bot.players[ign]?.ping}]`,
+                `${ign} failed ${name} ${id} [VL${amount}] [${bot.players[ign]?.ping ?? -1}]`,
                 `https://minotar.net/helm/${ign}.png`
             );
         channel.send(embed).catch(console.error);
+        logEvent(ign, 3, "alert", { name, id, amount, ping: bot.players[ign]?.ping ?? -1 });
     }
 
     if (message.match(votebanRegex)) {

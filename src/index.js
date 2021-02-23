@@ -12,7 +12,7 @@ const joinRegex = /^WELCOME BACK! (?<ign>\w{3,16}) just joined the server!$/;
 let db;
 
 const options = {
-    host: "51.68.203.77",
+    host: "pitsandbox.io",
     port: 25565,
     version: "1.8.9",
     username: email,
@@ -35,6 +35,7 @@ const { VerifyCommand } = require("./features/verification");
 const { WhoIsCommand } = require("./features/whois");
 const { InventoryCommand } = require("./features/inventory");
 const { EventsCommand } = require("./features/events");
+const { CheckCommand } = require("./features/checkCommand");
 require("./features/baltop");
 require("./features/playerlist");
 
@@ -51,7 +52,8 @@ client.registry
     }).registerCommand(VerifyCommand)
     .registerCommand(WhoIsCommand)
     .registerCommand(InventoryCommand)
-    .registerCommand(EventsCommand);
+    .registerCommand(EventsCommand)
+    .registerCommand(CheckCommand);
 
 const onMessage = message => {
     autoReply(message);

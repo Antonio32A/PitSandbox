@@ -1,6 +1,6 @@
 const { joinMessages } = require("../../config.json");
 
-const votebanStartRegex = /^\[Voteban] \w{3,16} started a vote to ban \w{3,16}! \d+ votes are required\.$/;
+const votebanStartRegex = /^VOTEBAN! \w{3,16} started a vote to ban \w{3,16}! Vote using \/vote\.$/;
 const votebanRegex = /^\[Voteban] (\w{3,16}) got banned due to a voting!$/;
 const anticheatBanRegex = /^ARES > (\w{3,16}) has been removed from your game for cheating\.$/;
 const combatLogRegex = /^(\w{3,16}) has logged out in combat!$/;
