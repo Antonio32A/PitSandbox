@@ -8,7 +8,7 @@ setInterval(async () => {
     bot.chat("/leaderboard");
     const promises = [];
 
-    for (let place = 1; place < 4; place++)
+    for (let place = 1; place < 3; place++)
         promises.push(waitForMessage(pointsRegex(place), 5000))
 
     let players;
@@ -19,7 +19,7 @@ setInterval(async () => {
 
 
     let leaderboard = "";
-    for (let place = 1; place < 9; place++) {
+    for (let place = 1; place < 3; place++) {
         const player = players[place - 1];
         leaderboard += `${place}. \`${player.username}\` - **$${player.points}**\n`;
     }
