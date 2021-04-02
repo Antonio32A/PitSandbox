@@ -2,7 +2,7 @@ const { pointsChannel, pointsMessage } = require("../../config.json");
 const { waitForMessage } = require("./utils");
 const { MessageEmbed } = require("discord.js");
 
-const pointsRegex = place => new RegExp(`#${place} (?<username>\\w{3,16}) - \\$(?<points>[\\d,.]+)`);
+const pointsRegex = place => new RegExp(`#${place} (?<username>\\w{3,16}) - (?<points>[\\d,.]+)`);
 
 setInterval(async () => {
     bot.chat("/leaderboard");
