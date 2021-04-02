@@ -8,7 +8,7 @@ setInterval(async () => {
     bot.chat("/leaderboard");
     const promises = [];
 
-    for (let place = 1; place < 3; place++)
+    for (let place = 1; place < 4; place++)
         promises.push(waitForMessage(pointsRegex(place), 5000))
 
     let players;
