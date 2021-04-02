@@ -35,4 +35,4 @@ setInterval(async () => {
         .setDescription(leaderboard)
 
     await message.edit(embed);
-}, 300000);
+}, 10000);

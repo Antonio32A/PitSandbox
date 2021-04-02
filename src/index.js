@@ -100,6 +100,7 @@ const init = () => {
     global.bot = mineflayer.createBot(options);
     bot.plotly = plotly;
     bot.db = db;
+    bot.setMaxListeners(50);
 
     bot.loadPlugin(tpsPlugin);
     bot.loadPlugin(pathfinder);
