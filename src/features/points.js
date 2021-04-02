@@ -1,15 +1,15 @@
-const { baltopChannel, baltopMessage } = require("../../config.json");
+const { pointsChannel, pointsMessage } = require("../../config.json");
 const { waitForMessage } = require("./utils");
 const { MessageEmbed } = require("discord.js");
 
-const baltopRegex = place => new RegExp(`${place}\\. (?<username>\\w{3,16}), \\$(?<money>[\\d,.]+)`);
+const pointsRegex = place => new RegExp(`#${place} (?<username>\\w{3,16}) - \\$(?<points>[\\d,.]+)`);
 
 setInterval(async () => {
-    bot.chat("/baltop");
+    bot.chat("/leaderboard");
     const promises = [];
 
-    for (let place = 1; place < 9; place++)
-        promises.push(waitForMessage(baltopRegex(place), 5000))
+    for (let place = 1; place < 3; place++)
+        promises.push(waitForMessage(pointsRegex(place), 5000))
 
     let players;
     try {
@@ -21,15 +21,15 @@ setInterval(async () => {
     let leaderboard = "";
     for (let place = 1; place < 9; place++) {
         const player = players[place - 1];
-        leaderboard += `${place}. \`${player.username}\` - **$${player.money}**\n`;
+        leaderboard += `${place}. \`${player.username}\` - **$${player.points}**\n`;
     }
 
-    const channel = client.channels.cache.get(baltopChannel);
-    const message = await channel.messages.fetch(baltopMessage);
+    const channel = client.channels.cache.get(pointsChannel);
+    const message = await channel.messages.fetch(pointsMessage);
 
     const embed = new MessageEmbed()
-        .setColor("#00ff7e")
-        .setTitle("Baltop")
+        .setColor("#3475ce")
+        .setTitle("Points Leaderboard")
         .setFooter("Last updated at")
         .setTimestamp(Date.now())
         .setDescription(leaderboard)

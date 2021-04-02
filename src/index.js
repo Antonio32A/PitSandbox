@@ -38,6 +38,7 @@ const { EventsCommand } = require("./features/events");
 const { CheckCommand } = require("./features/checkCommand");
 require("./features/baltop");
 require("./features/playerlist");
+require("./features/points");
 
 client.login(token);
 client.registry

@@ -1,4 +1,4 @@
-const { playerlistChannel, playerlistMessage, footer } = require("../../config.json");
+const { playerlistChannel, playerlistMessage } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
 
 setInterval(async () => {
@@ -11,7 +11,8 @@ setInterval(async () => {
         .addField("Players Online", firstHalf.join("\n"), true)
         .addField("\u200B", secondHalf.join("\n"), true)
         .setColor("#c5a0f5")
-        .setFooter(footer);
+        .setFooter("Last updated at")
+        .setTimestamp(Date.now());
 
     const channel = client.channels.cache.get(playerlistChannel);
     const message = await channel.messages.fetch(playerlistMessage);
