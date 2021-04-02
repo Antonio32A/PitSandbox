@@ -21,7 +21,7 @@ setInterval(async () => {
     let leaderboard = "";
     for (let place = 1; place < 4; place++) {
         const player = players[place - 1];
-        leaderboard += `${place}. \`${player.username}\` - **$${player.points}**\n`;
+        leaderboard += `${place}. \`${player.username}\` - **${player.points}**\n`;
     }
 
     const channel = client.channels.cache.get(pointsChannel);
